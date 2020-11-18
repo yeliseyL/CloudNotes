@@ -2,10 +2,8 @@ package com.eliseylobanov.cloudnotes.ui
 
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
+import android.view.*
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import androidx.navigation.Navigation
 import com.eliseylobanov.cloudnotes.R
 import com.eliseylobanov.cloudnotes.viewmodels.NotesMainViewModel
@@ -18,9 +16,14 @@ class NotesMainFragment : Fragment(R.layout.notes_main_fragment) {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProvider(this).get(NotesMainViewModel::class.java)
+        setHasOptionsMenu(true)
 
         fab.setOnClickListener(Navigation.createNavigateOnClickListener(R.id.action_notesMainFragment_to_noteFragment))
 
     }
 
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        inflater?.inflate(R.menu.menu_main, menu)
+    }
 }
