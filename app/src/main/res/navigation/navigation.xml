@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation"
+    app:startDestination="@id/notesMainFragment">
+    <fragment
+        android:id="@+id/notesMainFragment"
+        android:name="com.eliseylobanov.cloudnotes.ui.NotesMainFragment"
+        android:label="notes_main_fragment"
+        tools:layout="@layout/notes_main_fragment" >
+        <action
+            android:id="@+id/action_notesMainFragment_to_noteFragment"
+            app:destination="@id/noteFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+    </fragment>
+    <fragment
+        android:id="@+id/noteFragment"
+        android:name="com.eliseylobanov.cloudnotes.ui.NoteFragment"
+        android:label="note_fragment"
+        tools:layout="@layout/note_fragment" />
+</navigation>
