@@ -2,12 +2,14 @@ package com.eliseylobanov.cloudnotes.ui
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.annotation.ColorInt
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.eliseylobanov.cloudnotes.R
 import com.eliseylobanov.cloudnotes.data.Note
 import kotlinx.android.synthetic.main.item_note.view.*
+
 
 val DIFF_UTIL: DiffUtil.ItemCallback<Note> = object : DiffUtil.ItemCallback<Note>() {
     override fun areItemsTheSame(oldItem: Note, newItem: Note): Boolean {
@@ -35,7 +37,7 @@ class NotesAdapter : ListAdapter<Note, NotesAdapter.NoteViewHolder>(DIFF_UTIL) {
             with(itemView) {
                 title.text = item.title
                 body.text = item.note
-                cardView.setBackgroundColor(item.color)
+                cardView.setCardBackgroundColor(item.color)
             }
         }
     }

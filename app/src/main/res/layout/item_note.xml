@@ -5,12 +5,13 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_margin="10dp"
-    app:cardCornerRadius="10dp"
-    android:elevation="20dp"
-    android:innerRadius="0dp"
+    android:layout_margin="@dimen/margin_middle"
+    app:cardCornerRadius="@dimen/margin_middle"
+    android:elevation="@dimen/card_elevation"
     app:cardPreventCornerOverlap="true"
-    android:thicknessRatio="1.9">
+    android:clickable="true"
+    android:thicknessRatio="2"
+    android:focusable="true">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -22,18 +23,18 @@
             style="@style/TextAppearance.AppCompat.Title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            tools:text="Geekbrains + Kotlin forever"/>
+            android:layout_marginEnd="@dimen/margin_small"
+            android:layout_marginStart="@dimen/margin_small"
+            android:layout_marginTop="@dimen/margin_small"
+            tools:text="@string/cardView_sample_text"/>
 
         <TextView
             android:id="@+id/body"
             style="@style/TextAppearance.AppCompat"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            tools:text="Make Java great again!"/>
+            android:layout_margin="@dimen/margin_small"
+            tools:text="@string/cardView_sample_text"/>
     </LinearLayout>
 
 </androidx.cardview.widget.CardView>

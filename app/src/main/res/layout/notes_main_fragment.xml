@@ -10,7 +10,7 @@
         android:id="@+id/recyclerMain"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="8dp"
+        android:layout_margin="@dimen/margin_small"
         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
         app:spanCount="2"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
@@ -23,5 +23,5 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:src="@drawable/ic_baseline_add_24"
-        android:layout_margin="16dp"/>
+        android:layout_margin="@dimen/margin_big"/>
 </FrameLayout>
