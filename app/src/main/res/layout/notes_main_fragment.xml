@@ -7,9 +7,14 @@
     tools:context=".ui.NotesMainFragment">
 
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerMain"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="16dp"
+        android:layout_margin="8dp"
+        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+        app:spanCount="2"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        tools:listitem="@layout/item_note"
         />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
