@@ -1,17 +1,19 @@
 package com.eliseylobanov.cloudnotes.viewmodels
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import com.eliseylobanov.cloudnotes.data.NotesRepositoryData
+import android.app.Application
+import androidx.lifecycle.*
+import com.eliseylobanov.cloudnotes.data.database.NoteDao
+import com.eliseylobanov.cloudnotes.data.database.NoteEntity
 
-class NotesMainViewModel : ViewModel() {
-    private val viewStateLiveData = MutableLiveData<ViewState>(ViewState.EMPTY)
+class NotesMainViewModel(
+    private val database: NoteDao,
+) : ViewModel() {
+
+    private val notes = database.getAllNotes()
 
     init {
-        val notes = NotesRepositoryData.getAllNotes()
-        viewStateLiveData.value = ViewState.Value(notes)
+        val notes = database.getAllNotes()
     }
 
-    fun observeViewState(): LiveData<ViewState> = viewStateLiveData
+    fun observeViewState(): LiveData<List<NoteEntity>> = notes
 }

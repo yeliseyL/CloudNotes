@@ -20,5 +20,16 @@
     <fragment
         android:id="@+id/noteFragment"
         android:name="com.eliseylobanov.cloudnotes.ui.NoteFragment"
-        tools:layout="@layout/note_fragment" />
+        tools:layout="@layout/note_fragment" >
+        <action
+            android:id="@+id/action_noteFragment_to_notesMainFragment"
+            app:destination="@id/notesMainFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+        <argument
+            android:name="note"
+            app:argType="com.eliseylobanov.cloudnotes.data.Note" />
+    </fragment>
 </navigation>
