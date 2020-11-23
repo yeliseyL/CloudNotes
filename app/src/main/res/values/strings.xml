@@ -3,4 +3,7 @@
     <string name="cardView_sample_text">Geekbrains + Kotlin forever</string>
     <string name="note_title_hint">Title</string>
     <string name="note_hint">Enter some text</string>
+    <string name="menu_search">Search</string>
+    <string name="menu_color">Color</string>
+    <string name="menu_delete_all">Delete All</string>
 </resources>

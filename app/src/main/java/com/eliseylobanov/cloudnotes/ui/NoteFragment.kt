@@ -3,10 +3,8 @@ package com.eliseylobanov.cloudnotes.ui
 import android.app.Application
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
+import android.view.*
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
 import com.eliseylobanov.cloudnotes.R
@@ -61,4 +59,19 @@ class NoteFragment : Fragment() {
                 .navigate(NoteFragmentDirections.actionNoteFragmentToNotesMainFragment())
         }
     }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        inflater.inflate(R.menu.menu_note, menu)
+    }
+
+//    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+//        return when (item.itemId) {
+//            R.id.action_color_select -> {
+//
+//                true
+//            }
+//            else -> super.onOptionsItemSelected(item)
+//        }
+//    }
 }

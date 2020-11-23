@@ -16,6 +16,7 @@ import com.eliseylobanov.cloudnotes.databinding.NotesMainFragmentBinding
 import com.eliseylobanov.cloudnotes.viewmodels.NotesMainViewModel
 import com.eliseylobanov.cloudnotes.viewmodels.NotesMainViewModelFactory
 import com.eliseylobanov.cloudnotes.viewmodels.ViewState
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.item_note.*
 import kotlinx.android.synthetic.main.notes_main_fragment.*
 
@@ -29,11 +30,13 @@ class NotesMainFragment : Fragment(R.layout.notes_main_fragment) {
         )
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
 
         val binding: NotesMainFragmentBinding = DataBindingUtil.inflate(
-            inflater, R.layout.notes_main_fragment, container, false)
+            inflater, R.layout.notes_main_fragment, container, false
+        )
 
         val application: Application = requireNotNull(this.activity).application
         dataSource = NoteDatabase.getInstance(application).noteDao
@@ -63,11 +66,25 @@ class NotesMainFragment : Fragment(R.layout.notes_main_fragment) {
         fab.setOnClickListener {
             val note = Note()
             view.findNavController()
-                .navigate(NotesMainFragmentDirections.actionNotesMainFragmentToNoteFragment(note)) }
+                .navigate(NotesMainFragmentDirections.actionNotesMainFragmentToNoteFragment(note))
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
-        inflater?.inflate(R.menu.menu_main, menu)
+        inflater.inflate(R.menu.menu_main, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.action_delete_all -> {
+                Snackbar.make(requireView(), "Are you sure?", Snackbar.LENGTH_LONG)
+                    .setAction("OK") { viewModel.clear() }
+                    .show()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+
     }
 }

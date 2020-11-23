@@ -4,6 +4,7 @@ import android.app.Application
 import androidx.lifecycle.*
 import com.eliseylobanov.cloudnotes.data.database.NoteDao
 import com.eliseylobanov.cloudnotes.data.database.NoteEntity
+import kotlinx.coroutines.launch
 
 class NotesMainViewModel(
     private val database: NoteDao,
@@ -16,4 +17,10 @@ class NotesMainViewModel(
     }
 
     fun observeViewState(): LiveData<List<NoteEntity>> = notes
+
+    fun clear() {
+        viewModelScope.launch {
+            database.clear()
+        }
+    }
 }
