@@ -29,7 +29,16 @@
             app:popEnterAnim="@anim/nav_default_pop_enter_anim"
             app:popExitAnim="@anim/nav_default_pop_exit_anim" />
         <argument
-            android:name="note"
-            app:argType="com.eliseylobanov.cloudnotes.data.Note" />
+            android:name="noteId"
+            app:argType="java.lang.Long"
+            app:nullable="true" />
+        <action
+            android:id="@+id/action_noteFragment_to_colorChooserDialogFragment"
+            app:destination="@id/colorChooserDialogFragment" />
     </fragment>
+    <dialog
+        android:id="@+id/colorChooserDialogFragment"
+        android:name="com.eliseylobanov.cloudnotes.ui.ColorChooserDialogFragment"
+        android:label="fragment_color_chooser_dialog_list_dialog"
+        tools:layout="@layout/fragment_color_chooser_dialog_list_dialog" />
 </navigation>

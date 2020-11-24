@@ -1,6 +1,7 @@
 package com.eliseylobanov.cloudnotes.ui
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.ColorInt
 import androidx.lifecycle.liveData
@@ -24,7 +25,7 @@ val DIFF_UTIL: DiffUtil.ItemCallback<NoteEntity> = object : DiffUtil.ItemCallbac
         return true
     }
 }
-class NotesAdapter : ListAdapter<NoteEntity, NotesAdapter.NoteViewHolder>(DIFF_UTIL) {
+class NotesAdapter(val noteHandler: (NoteEntity) -> Unit) : ListAdapter<NoteEntity, NotesAdapter.NoteViewHolder>(DIFF_UTIL) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NoteViewHolder {
         return NoteViewHolder(parent)
@@ -34,16 +35,24 @@ class NotesAdapter : ListAdapter<NoteEntity, NotesAdapter.NoteViewHolder>(DIFF_U
         holder.bind(getItem(position))
     }
 
-    class NoteViewHolder(parent: ViewGroup) : RecyclerView.ViewHolder(
+    inner class NoteViewHolder(parent: ViewGroup) : RecyclerView.ViewHolder(
         LayoutInflater.from(parent.context).inflate(R.layout.item_note, parent, false)
     ) {
+
+        private lateinit var currentNote: NoteEntity
+
+        private val clickListener: View.OnClickListener = View.OnClickListener {
+            noteHandler(currentNote)
+        }
+
         fun bind(item: NoteEntity) {
+            currentNote = item
             with(itemView) {
                 title.text = item.titleText
                 body.text = item.noteText
                 cardView.setCardBackgroundColor(item.noteColor)
+                setOnClickListener(clickListener)
             }
         }
     }
-
 }

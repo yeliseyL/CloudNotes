@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Button xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/color"
+    android:layout_width="64dp"
+    android:layout_height="64dp"
+    android:background="?attr/selectableItemBackground"
+    android:layout_margin="8dp"
+    android:textAppearance="@style/TextAppearance.AppCompat.Large" />
