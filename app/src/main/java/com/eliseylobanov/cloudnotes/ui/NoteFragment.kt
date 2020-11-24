@@ -56,10 +56,6 @@ class NoteFragment : Fragment() {
             view.setBackgroundColor(color)
         })
 
-        viewModel.newColor.observe(viewLifecycleOwner, { newColor ->
-            view.setBackgroundColor(newColor.mapToColor(requireActivity()))
-        })
-
         noteFab.setOnClickListener {
             viewModel.titleText.value = titleEditText.text.toString()
             viewModel.noteText.value = noteEditText.text.toString()

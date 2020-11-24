@@ -18,17 +18,9 @@ class NoteViewModel(private val noteId: Long?, private val database: NoteDao) : 
     var noteText = MutableLiveData<String>()
     var noteColor = MutableLiveData<Int>()
 
-    private val _colorList = MutableLiveData<List<Color>>()
-    val colorList: LiveData<List<Color>>
-        get() = _colorList
-
     private var note: NoteEntity? = null
 
-    var newColor = MutableLiveData<Color>()
-
     init {
-
-        _colorList.value = ColorsRepository.getColors()
 
         if (noteId == null) {
             titleText.value = ""
