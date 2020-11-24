@@ -15,6 +15,7 @@ import com.eliseylobanov.cloudnotes.data.database.NoteDatabase
 import com.eliseylobanov.cloudnotes.data.mapToColor
 import com.eliseylobanov.cloudnotes.viewmodels.NoteViewModel
 import com.eliseylobanov.cloudnotes.viewmodels.NoteViewModelFactory
+import kotlinx.android.synthetic.main.item_note.*
 import kotlinx.android.synthetic.main.note_fragment.*
 
 
@@ -88,4 +89,6 @@ class NoteFragment : Fragment() {
             view?.setBackgroundColor(newColor.mapToColor(requireActivity()))
         })
     }
+
+
 }

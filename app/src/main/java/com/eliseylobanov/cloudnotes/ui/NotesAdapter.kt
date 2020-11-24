@@ -48,6 +48,7 @@ class NotesAdapter(val noteHandler: (NoteEntity) -> Unit) : ListAdapter<NoteEnti
         fun bind(item: NoteEntity) {
             currentNote = item
             with(itemView) {
+                date.text = item.noteDate
                 title.text = item.titleText
                 body.text = item.noteText
                 cardView.setCardBackgroundColor(item.noteColor)

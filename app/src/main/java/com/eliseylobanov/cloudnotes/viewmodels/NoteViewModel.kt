@@ -1,5 +1,6 @@
 package com.eliseylobanov.cloudnotes.viewmodels
 
+import android.annotation.SuppressLint
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -10,6 +11,8 @@ import com.eliseylobanov.cloudnotes.data.Note
 import com.eliseylobanov.cloudnotes.data.database.NoteDao
 import com.eliseylobanov.cloudnotes.data.database.NoteEntity
 import kotlinx.coroutines.launch
+import java.text.SimpleDateFormat
+import java.util.*
 
 class NoteViewModel(private val noteId: Long?, private val database: NoteDao) : ViewModel() {
 
@@ -23,12 +26,14 @@ class NoteViewModel(private val noteId: Long?, private val database: NoteDao) : 
     init {
 
         if (noteId == null) {
+            noteDate.value = getDate()
             titleText.value = ""
             noteText.value = ""
             noteColor.value = 0xffffffff.toInt()
         } else {
             viewModelScope.launch {
                 note = database.get(noteId)!!
+                noteDate.value = getDate()
                 titleText.value = note!!.titleText
                 noteText.value = note!!.noteText
                 noteColor.value = note!!.noteColor
@@ -37,7 +42,7 @@ class NoteViewModel(private val noteId: Long?, private val database: NoteDao) : 
     }
 
     private fun updateFields(note: NoteEntity) {
-//        note.noteDate = noteDate.value.toString()
+        note.noteDate = noteDate.value.toString()
         note.titleText = titleText.value.toString()
         note.noteText = noteText.value.toString()
         note.noteColor = noteColor.value!!
@@ -55,6 +60,15 @@ class NoteViewModel(private val noteId: Long?, private val database: NoteDao) : 
             }
         }
     }
+
+    private fun getDate(): String {
+        @SuppressLint("SimpleDateFormat")
+        val sdf = SimpleDateFormat("dd-MM-yyyy")
+        val cal = Calendar.getInstance()
+        val now =  cal.time
+        return sdf.format(now)
+    }
+
 }
 
 

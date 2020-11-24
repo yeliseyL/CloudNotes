@@ -1,8 +1,11 @@
 package com.eliseylobanov.cloudnotes.data.database
 
+import android.annotation.SuppressLint
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import java.text.SimpleDateFormat
+import java.util.*
 
 @Entity(tableName = "notes_table")
 class NoteEntity {
@@ -21,4 +24,5 @@ class NoteEntity {
     @ColumnInfo(name = "note_color")
     var noteColor: Int = 0xffffffff.toInt()
 }
+
 
