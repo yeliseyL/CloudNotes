@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "650624594614",
+    "firebase_url": "https://cloud-notes-8fcec.firebaseio.com",
+    "project_id": "cloud-notes-8fcec",
+    "storage_bucket": "cloud-notes-8fcec.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:650624594614:android:639d1c79d385dc6d912c17",
+        "android_client_info": {
+          "package_name": "com.eliseylobanov.cloudnotes"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "650624594614-t7qth6e1mka7mskdq2v2va3lj37vfttj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDxTFMK3maFzEMxtFqJ6gS_NVy3KqY2jWg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "650624594614-t7qth6e1mka7mskdq2v2va3lj37vfttj.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

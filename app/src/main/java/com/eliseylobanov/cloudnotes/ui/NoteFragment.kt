@@ -36,12 +36,12 @@ class NoteFragment : Fragment() {
         setHasOptionsMenu(true)
 
         val args = NoteFragmentArgs.fromBundle(requireArguments())
-        val application: Application = requireNotNull(this.activity).application
-        dataSource = NoteDatabase.getInstance(application).noteDao
+//        val application: Application = requireNotNull(this.activity).application
+//        dataSource = NoteDatabase.getInstance(application).noteDao
 
-        val viewModelFactory = NoteViewModelFactory(args.noteId, dataSource)
+        val viewModelFactory = NoteViewModelFactory(args.noteId)
 
-        val viewModel = ViewModelProvider(
+        viewModel = ViewModelProvider(
             this, viewModelFactory
         ).get(NoteViewModel::class.java)
 
@@ -60,7 +60,7 @@ class NoteFragment : Fragment() {
         noteFab.setOnClickListener {
             viewModel.titleText.value = titleEditText.text.toString()
             viewModel.noteText.value = noteEditText.text.toString()
-            viewModel.noteColor.value = (view.background as ColorDrawable).color
+//            viewModel.noteColor.value = (view.background as ColorDrawable).color
             viewModel.createNote()
             view.findNavController()
                 .navigate(NoteFragmentDirections.actionNoteFragmentToNotesMainFragment())
@@ -83,12 +83,12 @@ class NoteFragment : Fragment() {
         }
     }
 
-    override fun onResume() {
-        super.onResume()
-        ColorsRepository.newColor.observe(viewLifecycleOwner, { newColor ->
-            view?.setBackgroundColor(newColor.mapToColor(requireActivity()))
-        })
-    }
+//    override fun onResume() {
+//        super.onResume()
+//        ColorsRepository.newColor.observe(viewLifecycleOwner, { newColor ->
+//            view?.setBackgroundColor(newColor.mapToColor(requireActivity()))
+//        })
+//    }
 
 
 }

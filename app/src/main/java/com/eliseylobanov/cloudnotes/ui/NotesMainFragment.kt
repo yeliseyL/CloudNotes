@@ -15,15 +15,16 @@ import com.eliseylobanov.cloudnotes.data.mapToColor
 import com.eliseylobanov.cloudnotes.databinding.NotesMainFragmentBinding
 import com.eliseylobanov.cloudnotes.viewmodels.NotesMainViewModel
 import com.eliseylobanov.cloudnotes.viewmodels.NotesMainViewModelFactory
+import com.eliseylobanov.cloudnotes.viewmodels.ViewState
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.notes_main_fragment.*
 
 class NotesMainFragment : Fragment(R.layout.notes_main_fragment) {
 
-    private lateinit var dataSource: NoteDao
+//    private lateinit var dataSource: NoteDao
 
     private val viewModel by lazy(LazyThreadSafetyMode.NONE) {
-        ViewModelProvider(this, NotesMainViewModelFactory(dataSource)).get(
+        ViewModelProvider(this).get(
             NotesMainViewModel::class.java
         )
     }
@@ -36,8 +37,8 @@ class NotesMainFragment : Fragment(R.layout.notes_main_fragment) {
             inflater, R.layout.notes_main_fragment, container, false
         )
 
-        val application: Application = requireNotNull(this.activity).application
-        dataSource = NoteDatabase.getInstance(application).noteDao
+//        val application: Application = requireNotNull(this.activity).application
+//        dataSource = NoteDatabase.getInstance(application).noteDao
 //        val viewModelFactory = NotesMainViewModelFactory(dataSource)
 //
 //        val viewModel = ViewModelProvider(
@@ -57,7 +58,12 @@ class NotesMainFragment : Fragment(R.layout.notes_main_fragment) {
 
 
         viewModel.observeViewState().observe(viewLifecycleOwner) {
-            adapter.submitList(it)
+            when (it) {
+                is ViewState.Value -> {
+                    adapter.submitList(it.notes)
+                }
+                ViewState.EMPTY -> Unit
+            }
         }
 
         recyclerMain.adapter = adapter
@@ -74,17 +80,17 @@ class NotesMainFragment : Fragment(R.layout.notes_main_fragment) {
         inflater.inflate(R.menu.menu_main, menu)
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
-            R.id.action_delete_all -> {
-                Snackbar.make(requireView(), "Are you sure?", Snackbar.LENGTH_LONG)
-                    .setAction("OK") { viewModel.clear() }
-                    .show()
-                true
-            }
-            else -> super.onOptionsItemSelected(item)
-        }
-    }
+//    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+//        return when (item.itemId) {
+//            R.id.action_delete_all -> {
+//                Snackbar.make(requireView(), "Are you sure?", Snackbar.LENGTH_LONG)
+//                    .setAction("OK") { viewModel.clear() }
+//                    .show()
+//                true
+//            }
+//            else -> super.onOptionsItemSelected(item)
+//        }
+//    }
 
     private fun navigateToNote(noteId: Long?) {
         view?.findNavController()

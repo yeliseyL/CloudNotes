@@ -5,8 +5,9 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 class Note(
-    val id: Long = 0L,
-    val titleText: String = "",
-    val noteText: String = "",
-    val noteColor: Int = 0xffffffff.toInt(),
+    var noteId: Long = 0L,
+    var titleText: String = "",
+    var noteText: String = "",
+    var noteDate: String = "",
+    var noteColor: Int = 0xffffffff.toInt(),
 ) : Parcelable

@@ -6,12 +6,11 @@ import androidx.lifecycle.ViewModelProvider
 import com.eliseylobanov.cloudnotes.data.database.NoteDao
 
 class NotesMainViewModelFactory(
-    private val dataSource: NoteDao,
 ) : ViewModelProvider.Factory {
     @Suppress("unchecked_cast")
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(NotesMainViewModel::class.java)) {
-            return NotesMainViewModel(dataSource) as T
+            return NotesMainViewModel() as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }

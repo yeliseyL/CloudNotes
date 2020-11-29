@@ -16,16 +16,16 @@ import com.eliseylobanov.cloudnotes.data.database.NoteEntity
 import kotlinx.android.synthetic.main.item_note.view.*
 
 
-val DIFF_UTIL: DiffUtil.ItemCallback<NoteEntity> = object : DiffUtil.ItemCallback<NoteEntity>() {
-    override fun areItemsTheSame(oldItem: NoteEntity, newItem: NoteEntity): Boolean {
+val DIFF_UTIL: DiffUtil.ItemCallback<Note> = object : DiffUtil.ItemCallback<Note>() {
+    override fun areItemsTheSame(oldItem: Note, newItem: Note): Boolean {
         return oldItem == newItem
     }
 
-    override fun areContentsTheSame(oldItem: NoteEntity, newItem: NoteEntity): Boolean {
+    override fun areContentsTheSame(oldItem: Note, newItem: Note): Boolean {
         return true
     }
 }
-class NotesAdapter(val noteHandler: (NoteEntity) -> Unit) : ListAdapter<NoteEntity, NotesAdapter.NoteViewHolder>(DIFF_UTIL) {
+class NotesAdapter(val noteHandler: (Note) -> Unit) : ListAdapter<Note, NotesAdapter.NoteViewHolder>(DIFF_UTIL) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NoteViewHolder {
         return NoteViewHolder(parent)
@@ -39,13 +39,13 @@ class NotesAdapter(val noteHandler: (NoteEntity) -> Unit) : ListAdapter<NoteEnti
         LayoutInflater.from(parent.context).inflate(R.layout.item_note, parent, false)
     ) {
 
-        private lateinit var currentNote: NoteEntity
+        private lateinit var currentNote: Note
 
         private val clickListener: View.OnClickListener = View.OnClickListener {
             noteHandler(currentNote)
         }
 
-        fun bind(item: NoteEntity) {
+        fun bind(item: Note) {
             currentNote = item
             with(itemView) {
                 date.text = item.noteDate

@@ -9,12 +9,11 @@ import com.eliseylobanov.cloudnotes.data.database.NoteEntity
 
 class NoteViewModelFactory(
     private val noteId: Long?,
-    private val dataSource: NoteDao,
 ) : ViewModelProvider.Factory {
     @Suppress("unchecked_cast")
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(NoteViewModel::class.java)) {
-            return NoteViewModel(noteId, dataSource) as T
+            return NoteViewModel(noteId) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }
