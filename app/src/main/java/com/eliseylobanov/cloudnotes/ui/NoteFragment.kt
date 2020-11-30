@@ -60,7 +60,7 @@ class NoteFragment : Fragment() {
         noteFab.setOnClickListener {
             viewModel.titleText.value = titleEditText.text.toString()
             viewModel.noteText.value = noteEditText.text.toString()
-//            viewModel.noteColor.value = (view.background as ColorDrawable).color
+            viewModel.noteColor.value = (view.background as ColorDrawable).color
             viewModel.createNote()
             view.findNavController()
                 .navigate(NoteFragmentDirections.actionNoteFragmentToNotesMainFragment())
