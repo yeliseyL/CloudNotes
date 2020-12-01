@@ -5,6 +5,7 @@ plugins {
     id 'androidx.navigation.safeargs'
     id 'kotlin-kapt'
     id 'com.google.gms.google-services'
+    id 'koin'
 }
 
 android {
@@ -66,5 +67,18 @@ dependencies {
     implementation platform('com.google.firebase:firebase-bom:26.1.0')
     def multidex_version = "2.0.1"
     implementation "androidx.multidex:multidex:$multidex_version"
+    implementation "org.koin:koin-core:$koin_version"
+    implementation "org.koin:koin-core-ext:$koin_version"
+    testImplementation "org.koin:koin-test:$koin_version"
+    implementation "org.koin:koin-android:$koin_version"
+    implementation "org.koin:koin-android-scope:$koin_version"
+    implementation "org.koin:koin-android-viewmodel:$koin_version"
+    implementation "org.koin:koin-android-ext:$koin_version"
+    implementation "org.koin:koin-androidx-scope:$koin_version"
+    implementation "org.koin:koin-androidx-viewmodel:$koin_version"
+    implementation "org.koin:koin-androidx-fragment:$koin_version"
+    implementation "org.koin:koin-androidx-workmanager:$koin_version"
+    implementation "org.koin:koin-androidx-compose:$koin_version"
+    implementation "org.koin:koin-androidx-ext:$koin_version"
 
 }
