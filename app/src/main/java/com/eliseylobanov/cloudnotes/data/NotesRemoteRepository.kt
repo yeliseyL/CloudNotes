@@ -9,9 +9,8 @@ class NotesRemoteRepository (val provider: FireStoreProvider) : NotesRepository 
         return provider.observeNotes()
     }
 
-    override fun addOrReplaceNote(newNote: Note): LiveData<Result<Note>> {
+    override fun addOrReplaceNote(newNote: Note) {
         return provider.addOrReplaceNote(newNote)
     }
 }
 
-val notesRemoteRepository: NotesRepository by lazy { NotesRemoteRepository(FireStoreProvider()) }

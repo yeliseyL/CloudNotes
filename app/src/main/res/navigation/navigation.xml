@@ -29,8 +29,8 @@
             app:popEnterAnim="@anim/nav_default_pop_enter_anim"
             app:popExitAnim="@anim/nav_default_pop_exit_anim" />
         <argument
-            android:name="noteId"
-            app:argType="java.lang.Long"
+            android:name="note"
+            app:argType="com.eliseylobanov.cloudnotes.data.Note"
             app:nullable="true" />
         <action
             android:id="@+id/action_noteFragment_to_colorChooserDialogFragment"

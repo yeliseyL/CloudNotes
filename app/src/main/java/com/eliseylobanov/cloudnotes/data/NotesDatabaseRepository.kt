@@ -5,21 +5,20 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.eliseylobanov.cloudnotes.data.database.NoteDatabase
 import com.eliseylobanov.cloudnotes.data.database.NoteEntity
-import com.eliseylobanov.cloudnotes.viewmodels.NoteViewModel
 
 class NotesDatabaseRepository(context: Context) : NotesRepository {
     private val dataSource = NoteDatabase.getInstance(context).noteDao
 
     override fun observeNotes(): LiveData<List<Note>> {
-        val noteList =  MutableLiveData<List<Note>>()
-        noteList.value = dataSource.getAllNotes().value?.map {
-            it.toNote
+        val temp =  MutableLiveData<List<Note>>()
+        temp.value = dataSource.getAllNotes().value?.map {
+            it -> it.toNote
         }
-        return noteList
+        return temp
     }
 
-    override fun addOrReplaceNote(newNote: Note): LiveData<Result<Note>> {
-        return provider.addOrReplaceNote(newNote)
+    override fun addOrReplaceNote(newNote: Note) {
+        dataSource.insert(newNote.toNoteEntity)
     }
 
     suspend fun getNoteById(id: Long): Note? {
@@ -36,6 +35,17 @@ internal val NoteEntity.toNote: Note
         this.noteDate,
         this.noteColor,
     )
+
+internal val Note.toNoteEntity: NoteEntity
+    get() {
+        val noteEntity = NoteEntity()
+        noteEntity.noteId = this.noteId
+        noteEntity.noteDate = this.noteDate
+        noteEntity.titleText = this.titleText
+        noteEntity.noteText = this.noteText
+        return noteEntity
+    }
+
 
 
 

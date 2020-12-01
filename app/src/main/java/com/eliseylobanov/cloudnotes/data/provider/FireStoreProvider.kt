@@ -23,22 +23,22 @@ class FireStoreProvider : RemoteDataProvider {
         return result
     }
 
-    override fun addOrReplaceNote(newNote: Note): LiveData<Result<Note>> {
-        val result = MutableLiveData<Result<Note>>()
+    override fun addOrReplaceNote(newNote: Note){
+//        val result = MutableLiveData<Result<Note>>()
 
         notesReference
             .document(newNote.noteId.toString())
             .set(newNote)
-            .addOnSuccessListener {
-                Log.d(TAG, "Note $newNote is saved")
-                result.value = Result.success(newNote)
-            }
-            .addOnFailureListener {
-                Log.d(TAG, "Error saving note $newNote, message: ${it.message}")
-                result.value = Result.failure(it)
-            }
+//            .addOnSuccessListener {
+//                Log.d(TAG, "Note $newNote is saved")
+//                result.value = Result.success(newNote)
+//            }
+//            .addOnFailureListener {
+//                Log.d(TAG, "Error saving note $newNote, message: ${it.message}")
+//                result.value = Result.failure(it)
+//            }
 
-        return result
+//        return result
     }
 
     private fun subscribeForDbChanging() {

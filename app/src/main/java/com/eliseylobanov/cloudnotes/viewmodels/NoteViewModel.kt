@@ -7,9 +7,9 @@ import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.*
 
-class NoteViewModel(private val noteId: Long?) : ViewModel() {
+class NoteViewModel(private val notesRemoteRepository: NotesRepository, private var note: Note?) : ViewModel() {
 
-    private val notesDatabaseRepository: NotesRepository by lazy { NotesDatabaseRepository() }
+
     private val showErrorLiveData = MutableLiveData<Boolean>()
     private val lifecycleOwner: LifecycleOwner = LifecycleOwner { viewModelLifecycle }
 
@@ -24,25 +24,24 @@ class NoteViewModel(private val noteId: Long?) : ViewModel() {
 
     init {
         noteDate.value = getDate()
-        if (noteId == null) {
+        if (note == null) {
             titleText.value = ""
             noteText.value = ""
             noteColor.value = 0xffffffff.toInt()
         } else {
-            viewModelScope.launch {
-                val note = notesDatabaseRepository.getNoteById(noteId)
-                titleText.value = note.titleText
-                noteText.value = note.noteText
-                noteColor.value = note.noteColor
+            note?.let {
+                    titleText.value = it.titleText
+                    noteText.value = it.noteText
+                    noteColor.value = it.noteColor
+                }
             }
         }
-    }
 
     private fun updateFields(note: Note) {
         note.noteDate = getDate()
         note.titleText = titleText.value.toString()
         note.noteText = noteText.value.toString()
-        note.noteColor = noteColor.value
+//        note.noteColor = noteColor.value!!
     }
 
     fun createNote() {
@@ -59,11 +58,7 @@ class NoteViewModel(private val noteId: Long?) : ViewModel() {
         val newNote = Note()
         updateFields(newNote)
         newNote.let { note ->
-            notesRemoteRepository.addOrReplaceNote(note).observe(lifecycleOwner) {
-                it.onFailure {
-                    showErrorLiveData.value = true
-                }
-            }
+            notesRemoteRepository.addOrReplaceNote(note)
         }
     }
 

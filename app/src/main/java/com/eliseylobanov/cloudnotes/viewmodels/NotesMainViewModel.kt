@@ -2,28 +2,15 @@ package com.eliseylobanov.cloudnotes.viewmodels
 
 import android.app.Application
 import androidx.lifecycle.*
+import com.eliseylobanov.cloudnotes.data.NotesDatabaseRepository
+import com.eliseylobanov.cloudnotes.data.NotesRepository
 import com.eliseylobanov.cloudnotes.data.database.NoteDao
 import com.eliseylobanov.cloudnotes.data.database.NoteEntity
-import com.eliseylobanov.cloudnotes.data.notesRemoteRepository
 import kotlinx.coroutines.launch
 
-class NotesMainViewModel: ViewModel() {
+class NotesMainViewModel(private val notesRepository: NotesRepository): ViewModel() {
 
-//    private val notes = database.getAllNotes()
-//
-//    init {
-//        val notes = database.getAllNotes()
-//    }
-//
-//    fun observeViewState(): LiveData<List<NoteEntity>> = notes
-//
-//    fun clear() {
-//        viewModelScope.launch {
-//            database.clear()
-//        }
-//    }
-
-    fun observeViewState(): LiveData<ViewState> = notesRemoteRepository.observeNotes()
+    fun observeViewState(): LiveData<ViewState> = notesRepository.observeNotes()
         .map {
             if (it.isEmpty()) ViewState.EMPTY else ViewState.Value(it)
         }
