@@ -12,5 +12,7 @@ class NotesRemoteRepository (val provider: FireStoreProvider) : NotesRepository 
     override fun addOrReplaceNote(newNote: Note) {
         return provider.addOrReplaceNote(newNote)
     }
+
+    override fun clear() {}
 }
 

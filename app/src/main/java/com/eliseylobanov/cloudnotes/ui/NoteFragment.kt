@@ -7,6 +7,8 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import com.eliseylobanov.cloudnotes.R
+import com.eliseylobanov.cloudnotes.data.Color
+import com.eliseylobanov.cloudnotes.data.mapToColor
 import com.eliseylobanov.cloudnotes.viewmodels.NoteViewModel
 import kotlinx.android.synthetic.main.note_fragment.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -49,11 +51,18 @@ class NoteFragment : Fragment() {
         noteFab.setOnClickListener {
             viewModel.titleText.value = titleEditText.text.toString()
             viewModel.noteText.value = noteEditText.text.toString()
-//            viewModel.noteColor.value = (view.background as ColorDrawable).color
+            viewModel.noteColor.value = (view.background as ColorDrawable).color
             viewModel.createNote()
             view.findNavController()
                 .navigate(NoteFragmentDirections.actionNoteFragmentToNotesMainFragment())
         }
+
+        findNavController().currentBackStackEntry?.savedStateHandle?.getLiveData<Color>("color")
+            ?.observe(
+                viewLifecycleOwner) { result ->
+                viewModel.noteColor.value = result.mapToColor(requireContext())
+            }
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {

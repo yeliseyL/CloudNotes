@@ -10,6 +10,7 @@ import com.eliseylobanov.cloudnotes.data.Note
 import com.eliseylobanov.cloudnotes.databinding.NotesMainFragmentBinding
 import com.eliseylobanov.cloudnotes.viewmodels.NotesMainViewModel
 import com.eliseylobanov.cloudnotes.viewmodels.ViewState
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.notes_main_fragment.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -19,7 +20,7 @@ class NotesMainFragment : Fragment(R.layout.notes_main_fragment) {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
-    ): View? {
+    ): View {
 
         val binding: NotesMainFragmentBinding = DataBindingUtil.inflate(
             inflater, R.layout.notes_main_fragment, container, false
@@ -60,17 +61,17 @@ class NotesMainFragment : Fragment(R.layout.notes_main_fragment) {
         inflater.inflate(R.menu.menu_main, menu)
     }
 
-//    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-//        return when (item.itemId) {
-//            R.id.action_delete_all -> {
-//                Snackbar.make(requireView(), "Are you sure?", Snackbar.LENGTH_LONG)
-//                    .setAction("OK") { viewModel.clear() }
-//                    .show()
-//                true
-//            }
-//            else -> super.onOptionsItemSelected(item)
-//        }
-//    }
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.action_delete_all -> {
+                Snackbar.make(requireView(), "Are you sure?", Snackbar.LENGTH_LONG)
+                    .setAction("OK") { viewModel.clear() }
+                    .show()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
 
     private fun navigateToNote(note: Note?) {
         view?.findNavController()

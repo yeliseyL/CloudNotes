@@ -17,6 +17,7 @@ class NoteViewModel(private val notesRemoteRepository: NotesRepository, private 
         it.currentState = Lifecycle.State.RESUMED
     }
 
+    var noteId: Long = 0
     var noteDate = MutableLiveData<String>()
     var titleText = MutableLiveData<String>()
     var noteText = MutableLiveData<String>()
@@ -30,6 +31,7 @@ class NoteViewModel(private val notesRemoteRepository: NotesRepository, private 
             noteColor.value = 0xffffffff.toInt()
         } else {
             note?.let {
+                    noteId = it.noteId
                     titleText.value = it.titleText
                     noteText.value = it.noteText
                     noteColor.value = it.noteColor
@@ -38,23 +40,14 @@ class NoteViewModel(private val notesRemoteRepository: NotesRepository, private 
         }
 
     private fun updateFields(note: Note) {
+        note.noteId = noteId
         note.noteDate = getDate()
         note.titleText = titleText.value.toString()
         note.noteText = noteText.value.toString()
-//        note.noteColor = noteColor.value!!
+        note.noteColor = noteColor.value!!
     }
 
     fun createNote() {
-//        viewModelScope.launch {
-//            if (note == null) {
-//                val newNote = NoteEntity()
-//                updateFields(newNote)
-//                database.insert(newNote)
-//            } else {
-//                updateFields(note!!)
-//                database.update(note!!)
-//            }
-//        }
         val newNote = Note()
         updateFields(newNote)
         newNote.let { note ->

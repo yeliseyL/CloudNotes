@@ -21,7 +21,7 @@ object DependencyGraph {
     private val repositoryModule by lazy {
         module {
 //            single { NotesRemoteRepository(get()) } bind NotesRepository::class
-            single { NotesDatabaseRepository(get()) } bind NotesRepository::class
+            single { NotesDatabaseRepository(androidApplication()) } bind NotesRepository::class
 //            single { FireStoreProvider() } bind RemoteDataProvider::class
         }
     }

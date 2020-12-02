@@ -2,6 +2,7 @@ package com.eliseylobanov.cloudnotes.viewmodels
 
 import android.app.Application
 import androidx.lifecycle.*
+import com.eliseylobanov.cloudnotes.data.Note
 import com.eliseylobanov.cloudnotes.data.NotesDatabaseRepository
 import com.eliseylobanov.cloudnotes.data.NotesRepository
 import com.eliseylobanov.cloudnotes.data.database.NoteDao
@@ -14,4 +15,8 @@ class NotesMainViewModel(private val notesRepository: NotesRepository): ViewMode
         .map {
             if (it.isEmpty()) ViewState.EMPTY else ViewState.Value(it)
         }
+
+    fun clear() {
+        notesRepository.clear()
+    }
 }

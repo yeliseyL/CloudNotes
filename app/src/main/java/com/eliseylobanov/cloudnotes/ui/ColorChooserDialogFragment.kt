@@ -10,6 +10,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import com.eliseylobanov.cloudnotes.R
 import com.eliseylobanov.cloudnotes.data.ColorsRepository
 import com.eliseylobanov.cloudnotes.data.database.NoteDatabase
@@ -37,7 +39,7 @@ class ColorChooserDialogFragment : BottomSheetDialogFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val adapter = NoteColorAdapter {
-            ColorsRepository.newColor.value = it
+            findNavController().previousBackStackEntry?.savedStateHandle?.set("color", it)
         }
 
         viewModel.colorList.observe(viewLifecycleOwner) {

@@ -1,13 +1,15 @@
 package com.eliseylobanov.cloudnotes.data.database
 
+import android.app.Application
 import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.room.*
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface NoteDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insert(note: NoteEntity)
+    suspend fun insert(note: NoteEntity)
 
     @Update
     suspend fun update(note: NoteEntity)
@@ -19,7 +21,7 @@ interface NoteDao {
     suspend fun clear()
 
     @Query("SELECT * FROM notes_table ORDER BY noteId DESC")
-    fun getAllNotes(): LiveData<List<NoteEntity>>
+    fun getAllNotes(): Flow<List<NoteEntity>>
 }
 
 @Database(entities = [NoteEntity::class], version = 1, exportSchema = false)
@@ -32,13 +34,13 @@ abstract class NoteDatabase : RoomDatabase() {
         @Volatile
         private var INSTANCE: NoteDatabase? = null
 
-        fun getInstance(context: Context): NoteDatabase {
+        fun getInstance(application: Application): NoteDatabase {
             synchronized(this) {
                 var instance = INSTANCE
 
                 if (instance == null) {
                     instance = Room.databaseBuilder(
-                        context.applicationContext,
+                        application,
                         NoteDatabase::class.java,
                         "note_database"
                     )

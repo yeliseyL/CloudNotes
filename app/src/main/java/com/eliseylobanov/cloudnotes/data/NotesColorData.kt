@@ -33,8 +33,6 @@ fun Color.mapToColor(context: Context): Int {
 
 object ColorsRepository  {
 
-    val newColor = MutableLiveData<Color>()
-
     private val colors: List<Color> = listOf(
         Color.BLUE,
         Color.GREEN,
