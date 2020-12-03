@@ -25,6 +25,10 @@ class NotesDatabaseRepository(application: Application) : NotesRepository {
         return temp
     }
 
+    override fun getCurrentUser(): User? {
+        return null
+    }
+
     override fun addOrReplaceNote(newNote: Note) {
         GlobalScope.launch {
             dataSource.insert(newNote.toNoteEntity)

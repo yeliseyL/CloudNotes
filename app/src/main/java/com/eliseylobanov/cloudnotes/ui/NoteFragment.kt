@@ -80,13 +80,4 @@ class NoteFragment : Fragment() {
             else -> super.onOptionsItemSelected(item)
         }
     }
-
-//    override fun onResume() {
-//        super.onResume()
-//        ColorsRepository.newColor.observe(viewLifecycleOwner, { newColor ->
-//            view?.setBackgroundColor(newColor.mapToColor(requireActivity()))
-//        })
-//    }
-
-
 }

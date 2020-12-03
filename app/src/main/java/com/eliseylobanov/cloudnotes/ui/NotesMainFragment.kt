@@ -1,15 +1,22 @@
 package com.eliseylobanov.cloudnotes.ui
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.*
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentController
+import androidx.navigation.NavController
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import com.eliseylobanov.cloudnotes.R
+import com.eliseylobanov.cloudnotes.data.Color
 import com.eliseylobanov.cloudnotes.data.Note
+import com.eliseylobanov.cloudnotes.data.mapToColor
 import com.eliseylobanov.cloudnotes.databinding.NotesMainFragmentBinding
 import com.eliseylobanov.cloudnotes.viewmodels.NotesMainViewModel
 import com.eliseylobanov.cloudnotes.viewmodels.ViewState
+import com.firebase.ui.auth.AuthUI
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.notes_main_fragment.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -17,6 +24,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 class NotesMainFragment : Fragment(R.layout.notes_main_fragment) {
 
     private val viewModel by viewModel<NotesMainViewModel>()
+    lateinit var navController: NavController
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -34,6 +42,10 @@ class NotesMainFragment : Fragment(R.layout.notes_main_fragment) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        findNavController().currentBackStackEntry?.savedStateHandle?.getLiveData<Boolean>("logout")
+            ?.observe(
+                viewLifecycleOwner) { if (it) onLogout() }
+
         val adapter = NotesAdapter {
             navigateToNote(it)
         }
@@ -48,10 +60,11 @@ class NotesMainFragment : Fragment(R.layout.notes_main_fragment) {
         }
 
         recyclerMain.adapter = adapter
+        navController = view.findNavController()
 
         setHasOptionsMenu(true)
         fab.setOnClickListener {
-            view.findNavController()
+            navController
                 .navigate(NotesMainFragmentDirections.actionNotesMainFragmentToNoteFragment(null))
         }
     }
@@ -69,6 +82,20 @@ class NotesMainFragment : Fragment(R.layout.notes_main_fragment) {
                     .show()
                 true
             }
+            R.id.action_login -> {
+                Snackbar.make(requireView(), "Are you sure?", Snackbar.LENGTH_LONG)
+                    .setAction("OK") {  navController
+                        .navigate(NotesMainFragmentDirections.actionNotesMainFragmentToSplashFragment()) }
+                    .show()
+                true
+            }
+            R.id.action_logout -> {
+                Snackbar.make(requireView(), "Are you sure?", Snackbar.LENGTH_LONG)
+                    .setAction("OK") {  navController
+                        .navigate(NotesMainFragmentDirections.actionNotesMainFragmentToLogoutDialogFragment()) }
+                    .show()
+                true
+            }
             else -> super.onOptionsItemSelected(item)
         }
     }
@@ -78,4 +105,8 @@ class NotesMainFragment : Fragment(R.layout.notes_main_fragment) {
             ?.navigate(NotesMainFragmentDirections.actionNotesMainFragmentToNoteFragment(note))
     }
 
+    private fun onLogout() {
+        AuthUI.getInstance()
+            .signOut(requireContext())
+    }
 }

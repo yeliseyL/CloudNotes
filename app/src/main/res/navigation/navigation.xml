@@ -16,6 +16,12 @@
             app:exitAnim="@anim/nav_default_exit_anim"
             app:popEnterAnim="@anim/nav_default_pop_enter_anim"
             app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+        <action
+            android:id="@+id/action_notesMainFragment_to_splashFragment"
+            app:destination="@id/splashFragment" />
+        <action
+            android:id="@+id/action_notesMainFragment_to_logoutDialogFragment"
+            app:destination="@id/logoutDialogFragment" />
     </fragment>
     <fragment
         android:id="@+id/noteFragment"
@@ -41,4 +47,16 @@
         android:name="com.eliseylobanov.cloudnotes.ui.ColorChooserDialogFragment"
         android:label="fragment_color_chooser_dialog_list_dialog"
         tools:layout="@layout/fragment_color_chooser_dialog_list_dialog" />
+    <fragment
+        android:id="@+id/splashFragment"
+        android:name="com.eliseylobanov.cloudnotes.ui.SplashFragment"
+        android:label="SplashFragment" >
+        <action
+            android:id="@+id/action_splashFragment_to_notesMainFragment"
+            app:destination="@id/notesMainFragment" />
+    </fragment>
+    <dialog
+        android:id="@+id/logoutDialogFragment"
+        android:name="com.eliseylobanov.cloudnotes.ui.LogoutDialogFragment"
+        android:label="LogoutDialogFragment" />
 </navigation>

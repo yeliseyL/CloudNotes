@@ -14,5 +14,7 @@ class NotesRemoteRepository (val provider: FireStoreProvider) : NotesRepository 
     }
 
     override fun clear() {}
+
+    override fun getCurrentUser() = provider.getCurrentUser()
 }
 
