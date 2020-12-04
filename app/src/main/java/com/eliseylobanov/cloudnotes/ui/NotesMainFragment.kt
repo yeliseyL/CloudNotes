@@ -75,14 +75,14 @@ class NotesMainFragment : Fragment(R.layout.notes_main_fragment) {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.action_delete_all -> {
-                Snackbar.make(requireView(), "Are you sure?", Snackbar.LENGTH_LONG)
-                    .setAction("OK") { viewModel.clear() }
+                Snackbar.make(requireView(), getString(R.string.are_you_sure), Snackbar.LENGTH_LONG)
+                    .setAction(getString(R.string.ok_text)) { viewModel.clear() }
                     .show()
                 true
             }
             R.id.action_login -> {
-                Snackbar.make(requireView(), "Are you sure?", Snackbar.LENGTH_LONG)
-                    .setAction("OK") {
+                Snackbar.make(requireView(), getString(R.string.are_you_sure), Snackbar.LENGTH_LONG)
+                    .setAction(getString(R.string.ok_text)) {
                         navController
                             .navigate(NotesMainFragmentDirections.actionNotesMainFragmentToSplashFragment())
                     }
@@ -90,8 +90,8 @@ class NotesMainFragment : Fragment(R.layout.notes_main_fragment) {
                 true
             }
             R.id.action_logout -> {
-                Snackbar.make(requireView(), "Are you sure?", Snackbar.LENGTH_LONG)
-                    .setAction("OK") {
+                Snackbar.make(requireView(), getString(R.string.are_you_sure), Snackbar.LENGTH_LONG)
+                    .setAction(getString(R.string.ok_text)) {
                         navController
                             .navigate(NotesMainFragmentDirections.actionNotesMainFragmentToLogoutDialogFragment())
                     }

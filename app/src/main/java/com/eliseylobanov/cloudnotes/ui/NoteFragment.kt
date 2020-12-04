@@ -12,6 +12,7 @@ import com.eliseylobanov.cloudnotes.data.mapToColor
 import com.eliseylobanov.cloudnotes.databinding.NoteFragmentBinding
 import com.eliseylobanov.cloudnotes.databinding.NotesMainFragmentBinding
 import com.eliseylobanov.cloudnotes.viewmodels.NoteViewModel
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.note_fragment.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
@@ -78,7 +79,9 @@ class NoteFragment : Fragment() {
                 true
             }
             R.id.action_delete -> {
-                viewModel.deleteNote()
+                Snackbar.make(requireView(), getString(R.string.are_you_sure), Snackbar.LENGTH_LONG)
+                    .setAction("OK") { viewModel.deleteNote() }
+                    .show()
                 this.findNavController()
                     .navigate(NoteFragmentDirections.actionNoteFragmentToNotesMainFragment())
                 true

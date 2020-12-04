@@ -28,6 +28,12 @@ class ColorChooserDialogFragment : BottomSheetDialogFragment() {
 
     private val viewModel by viewModel<ColorChooserViewModel>()
 
+    private val viewMode by lazy(LazyThreadSafetyMode.NONE) {
+        ViewModelProvider(this).get(
+            ColorChooserViewModel::class.java
+        )
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -43,10 +49,10 @@ class ColorChooserDialogFragment : BottomSheetDialogFragment() {
             findNavController().previousBackStackEntry?.savedStateHandle?.set("color", it)
         }
 
+        binding.colorRecycler.adapter = adapter
         viewModel.colorList.observe(viewLifecycleOwner) {
             adapter.submitList(it)
         }
-        binding.colorRecycler.adapter = adapter
 
     }
 }

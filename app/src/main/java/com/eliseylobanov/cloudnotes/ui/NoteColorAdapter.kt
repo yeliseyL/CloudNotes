@@ -26,7 +26,7 @@ class NoteColorAdapter(val colorHandler: (Color) -> Unit) : ListAdapter<Color, N
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NoteColorViewHolder {
         val inflater = LayoutInflater.from(parent.context)
-        val binding = ItemColorBinding.inflate(inflater)
+        val binding = ItemColorBinding.inflate(inflater, parent, false)
         return NoteColorViewHolder(binding)
     }
 
@@ -34,7 +34,7 @@ class NoteColorAdapter(val colorHandler: (Color) -> Unit) : ListAdapter<Color, N
         holder.bind(getItem(position))
     }
 
-    inner class NoteColorViewHolder(binding: ItemColorBinding) : RecyclerView.ViewHolder(
+    inner class NoteColorViewHolder(val binding: ItemColorBinding) : RecyclerView.ViewHolder(
         binding.root
     ) {
 
@@ -47,7 +47,7 @@ class NoteColorAdapter(val colorHandler: (Color) -> Unit) : ListAdapter<Color, N
         fun bind(item: Color) {
             currentColor = item
             with(itemView) {
-                colorBtn.setBackgroundColor(item.mapToColor(context))
+                binding.colorBtn.setBackgroundColor(item.mapToColor(context))
                 setOnClickListener(clickListener)
             }
         }
