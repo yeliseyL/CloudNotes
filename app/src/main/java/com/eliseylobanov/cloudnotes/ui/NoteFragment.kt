@@ -1,8 +1,10 @@
 package com.eliseylobanov.cloudnotes.ui
 
+import android.content.Context
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.*
+import android.view.inputmethod.InputMethodManager
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
@@ -55,6 +57,7 @@ class NoteFragment : Fragment() {
             viewModel.noteText.value = noteEditText.text.toString()
             viewModel.noteColor.value = (view.background as ColorDrawable).color
             viewModel.createNote()
+            view.hideKeyboard()
             view.findNavController()
                 .navigate(NoteFragmentDirections.actionNoteFragmentToNotesMainFragment())
         }
@@ -88,5 +91,10 @@ class NoteFragment : Fragment() {
             }
             else -> super.onOptionsItemSelected(item)
         }
+    }
+
+    fun View.hideKeyboard() {
+        val inputManager = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        inputManager.hideSoftInputFromWindow(windowToken, 0)
     }
 }
