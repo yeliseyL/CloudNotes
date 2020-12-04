@@ -31,7 +31,7 @@ fun Color.mapToColor(context: Context): Int {
     return ContextCompat.getColor(context, id)
 }
 
-object ColorsRepository  {
+class ColorsRepository  {
 
     private val colors: List<Color> = listOf(
         Color.BLUE,

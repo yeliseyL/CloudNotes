@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.eliseylobanov.cloudnotes.R
 import com.eliseylobanov.cloudnotes.data.Color
 import com.eliseylobanov.cloudnotes.data.mapToColor
+import com.eliseylobanov.cloudnotes.databinding.ItemColorBinding
 import kotlinx.android.synthetic.main.item_color.view.*
 
 val DIFF_UTIL_COLOR: DiffUtil.ItemCallback<Color> = object : DiffUtil.ItemCallback<Color>() {
@@ -24,15 +25,17 @@ val DIFF_UTIL_COLOR: DiffUtil.ItemCallback<Color> = object : DiffUtil.ItemCallba
 class NoteColorAdapter(val colorHandler: (Color) -> Unit) : ListAdapter<Color, NoteColorAdapter.NoteColorViewHolder>(DIFF_UTIL_COLOR) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NoteColorViewHolder {
-        return NoteColorViewHolder(parent)
+        val inflater = LayoutInflater.from(parent.context)
+        val binding = ItemColorBinding.inflate(inflater)
+        return NoteColorViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: NoteColorViewHolder, position: Int) {
         holder.bind(getItem(position))
     }
 
-    inner class NoteColorViewHolder(parent: ViewGroup) : RecyclerView.ViewHolder(
-        LayoutInflater.from(parent.context).inflate(R.layout.item_color, parent, false)
+    inner class NoteColorViewHolder(binding: ItemColorBinding) : RecyclerView.ViewHolder(
+        binding.root
     ) {
 
         private lateinit var currentColor: Color
@@ -44,7 +47,7 @@ class NoteColorAdapter(val colorHandler: (Color) -> Unit) : ListAdapter<Color, N
         fun bind(item: Color) {
             currentColor = item
             with(itemView) {
-                color.setBackgroundColor(item.mapToColor(context))
+                colorBtn.setBackgroundColor(item.mapToColor(context))
                 setOnClickListener(clickListener)
             }
         }

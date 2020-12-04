@@ -55,6 +55,10 @@ class NoteViewModel(private val notesRemoteRepository: NotesRepository, private 
         }
     }
 
+    fun deleteNote() {
+        note?.let { notesRemoteRepository.delete(it.noteId) }
+    }
+
     fun showError(): LiveData<Boolean> = showErrorLiveData
 
     private fun getDate(): String {

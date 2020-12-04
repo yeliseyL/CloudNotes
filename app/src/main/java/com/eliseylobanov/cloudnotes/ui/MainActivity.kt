@@ -42,8 +42,4 @@ class MainActivity : AppCompatActivity() {
         val navController = this.findNavController(R.id.navigation_fragment)
         return NavigationUI.navigateUp(navController, appBarConfiguration)
     }
-
-//    companion object {
-//        fun getStartIntent(context: Context) = Intent(context, MainActivity::class.java)
-//    }
 }

@@ -17,6 +17,9 @@ interface NoteDao {
     @Query("SELECT * from notes_table WHERE noteId = :key")
     suspend fun get(key: Long): NoteEntity?
 
+    @Query("DELETE FROM notes_table WHERE noteId = :key")
+    suspend fun delete(key: Long)
+
     @Query("DELETE FROM notes_table")
     suspend fun clear()
 

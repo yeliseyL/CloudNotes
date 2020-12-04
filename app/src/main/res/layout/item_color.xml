@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Button xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/color"
-    android:layout_width="@dimen/color_size"
-    android:layout_height="@dimen/color_size"
-    android:background="?attr/selectableItemBackground"
-    android:layout_margin="@dimen/margin_small"
-    android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+<layout>
+    <Button xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/colorBtn"
+        android:layout_width="@dimen/color_size"
+        android:layout_height="@dimen/color_size"
+        android:background="?attr/selectableItemBackground"
+        android:layout_margin="@dimen/margin_small"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+</layout>

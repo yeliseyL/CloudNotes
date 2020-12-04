@@ -15,24 +15,25 @@ import androidx.navigation.fragment.findNavController
 import com.eliseylobanov.cloudnotes.R
 import com.eliseylobanov.cloudnotes.data.ColorsRepository
 import com.eliseylobanov.cloudnotes.data.database.NoteDatabase
+import com.eliseylobanov.cloudnotes.databinding.ColorChooserDialogFragmentBinding
+import com.eliseylobanov.cloudnotes.databinding.NoteFragmentBinding
 import com.eliseylobanov.cloudnotes.viewmodels.*
-import kotlinx.android.synthetic.main.fragment_color_chooser_dialog_list_dialog.*
 import kotlinx.android.synthetic.main.notes_main_fragment.*
 import kotlinx.android.synthetic.main.notes_main_fragment.recyclerMain
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class ColorChooserDialogFragment : BottomSheetDialogFragment() {
 
-    private val viewModel by lazy(LazyThreadSafetyMode.NONE) {
-        ViewModelProvider(this).get(
-            ColorChooserViewModel::class.java
-        )
-    }
+    lateinit var binding: ColorChooserDialogFragmentBinding
+
+    private val viewModel by viewModel<ColorChooserViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? { return inflater.inflate(
-            R.layout.fragment_color_chooser_dialog_list_dialog, container, false)
+    ): View? {
+        binding = ColorChooserDialogFragmentBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -45,7 +46,7 @@ class ColorChooserDialogFragment : BottomSheetDialogFragment() {
         viewModel.colorList.observe(viewLifecycleOwner) {
             adapter.submitList(it)
         }
-        colorRecycler.adapter = adapter
+        binding.colorRecycler.adapter = adapter
 
     }
 }

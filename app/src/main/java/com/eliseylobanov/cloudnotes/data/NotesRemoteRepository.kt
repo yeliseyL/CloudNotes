@@ -3,7 +3,7 @@ package com.eliseylobanov.cloudnotes.data
 import androidx.lifecycle.LiveData
 import com.eliseylobanov.cloudnotes.data.provider.FireStoreProvider
 
-class NotesRemoteRepository (val provider: FireStoreProvider) : NotesRepository {
+class NotesRemoteRepository(val provider: FireStoreProvider) : NotesRepository {
 
     override fun observeNotes(): LiveData<List<Note>> {
         return provider.observeNotes()
@@ -16,5 +16,7 @@ class NotesRemoteRepository (val provider: FireStoreProvider) : NotesRepository 
     override fun clear() {}
 
     override fun getCurrentUser() = provider.getCurrentUser()
+    override fun delete(id: Long) = provider.deleteNote(id)
+
 }
 

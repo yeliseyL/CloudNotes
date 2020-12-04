@@ -8,4 +8,5 @@ interface RemoteDataProvider {
     fun getCurrentUser(): User?
     fun observeNotes(): LiveData<List<Note>>
     fun addOrReplaceNote(newNote: Note)
+    fun deleteNote(id: Long)
 }

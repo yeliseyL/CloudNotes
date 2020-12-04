@@ -7,5 +7,6 @@ interface NotesRepository {
     fun observeNotes(): LiveData<List<Note>>
     fun addOrReplaceNote(newNote: Note)
     fun clear()
+    fun delete(id: Long)
     fun getCurrentUser(): User?
 }

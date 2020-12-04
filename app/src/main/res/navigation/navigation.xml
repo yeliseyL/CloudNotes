@@ -46,7 +46,7 @@
         android:id="@+id/colorChooserDialogFragment"
         android:name="com.eliseylobanov.cloudnotes.ui.ColorChooserDialogFragment"
         android:label="fragment_color_chooser_dialog_list_dialog"
-        tools:layout="@layout/fragment_color_chooser_dialog_list_dialog" />
+        tools:layout="@layout/color_chooser_dialog_fragment" />
     <fragment
         android:id="@+id/splashFragment"
         android:name="com.eliseylobanov.cloudnotes.ui.SplashFragment"

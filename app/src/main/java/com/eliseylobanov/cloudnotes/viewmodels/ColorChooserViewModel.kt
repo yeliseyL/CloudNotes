@@ -5,15 +5,17 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.eliseylobanov.cloudnotes.data.Color
 import com.eliseylobanov.cloudnotes.data.ColorsRepository
+import com.eliseylobanov.cloudnotes.data.Note
+import com.eliseylobanov.cloudnotes.data.NotesRepository
 
-class ColorChooserViewModel: ViewModel() {
+class ColorChooserViewModel(colorsRepository: ColorsRepository): ViewModel() {
 
     private val _colorList = MutableLiveData<List<Color>>()
     val colorList: LiveData<List<Color>>
         get() = _colorList
 
     init {
-        _colorList.value = ColorsRepository.getColors()
+        _colorList.value = colorsRepository.getColors()
     }
 
 }

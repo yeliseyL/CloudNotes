@@ -29,6 +29,12 @@ class NotesDatabaseRepository(application: Application) : NotesRepository {
         return null
     }
 
+    override fun delete(id: Long) {
+        GlobalScope.launch {
+            dataSource.delete(id)
+        }
+    }
+
     override fun addOrReplaceNote(newNote: Note) {
         GlobalScope.launch {
             dataSource.insert(newNote.toNoteEntity)

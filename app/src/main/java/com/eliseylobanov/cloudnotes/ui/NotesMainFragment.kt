@@ -24,18 +24,15 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 class NotesMainFragment : Fragment(R.layout.notes_main_fragment) {
 
     private val viewModel by viewModel<NotesMainViewModel>()
-    lateinit var navController: NavController
+    private lateinit var navController: NavController
+    lateinit var binding: NotesMainFragmentBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
-
-        val binding: NotesMainFragmentBinding = DataBindingUtil.inflate(
-            inflater, R.layout.notes_main_fragment, container, false
-        )
+        binding = NotesMainFragmentBinding.inflate(inflater, container, false)
         binding.lifecycleOwner = this
         binding.notesMainViewModel = viewModel
-
         return binding.root
     }
 
@@ -44,7 +41,8 @@ class NotesMainFragment : Fragment(R.layout.notes_main_fragment) {
 
         findNavController().currentBackStackEntry?.savedStateHandle?.getLiveData<Boolean>("logout")
             ?.observe(
-                viewLifecycleOwner) { if (it) onLogout() }
+                viewLifecycleOwner
+            ) { if (it) onLogout() }
 
         val adapter = NotesAdapter {
             navigateToNote(it)
@@ -59,11 +57,11 @@ class NotesMainFragment : Fragment(R.layout.notes_main_fragment) {
             }
         }
 
-        recyclerMain.adapter = adapter
+        binding.recyclerMain.adapter = adapter
         navController = view.findNavController()
 
         setHasOptionsMenu(true)
-        fab.setOnClickListener {
+        binding.fab.setOnClickListener {
             navController
                 .navigate(NotesMainFragmentDirections.actionNotesMainFragmentToNoteFragment(null))
         }
@@ -84,15 +82,19 @@ class NotesMainFragment : Fragment(R.layout.notes_main_fragment) {
             }
             R.id.action_login -> {
                 Snackbar.make(requireView(), "Are you sure?", Snackbar.LENGTH_LONG)
-                    .setAction("OK") {  navController
-                        .navigate(NotesMainFragmentDirections.actionNotesMainFragmentToSplashFragment()) }
+                    .setAction("OK") {
+                        navController
+                            .navigate(NotesMainFragmentDirections.actionNotesMainFragmentToSplashFragment())
+                    }
                     .show()
                 true
             }
             R.id.action_logout -> {
                 Snackbar.make(requireView(), "Are you sure?", Snackbar.LENGTH_LONG)
-                    .setAction("OK") {  navController
-                        .navigate(NotesMainFragmentDirections.actionNotesMainFragmentToLogoutDialogFragment()) }
+                    .setAction("OK") {
+                        navController
+                            .navigate(NotesMainFragmentDirections.actionNotesMainFragmentToLogoutDialogFragment())
+                    }
                     .show()
                 true
             }

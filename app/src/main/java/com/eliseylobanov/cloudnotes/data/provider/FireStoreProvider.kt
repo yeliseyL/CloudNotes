@@ -52,6 +52,12 @@ class FireStoreProvider : RemoteDataProvider {
         db.collection(USERS_COLLECTION).document(it.uid).collection(NOTES_COLLECTION)
     } ?: throw NoAuthException()
 
+    override fun deleteNote(id: Long) {
+        getUserNotesCollection()
+            .document(id.toString())
+            .delete()
+    }
+
     private fun subscribeForDbChanging() {
         handleNotesReference(
             {
