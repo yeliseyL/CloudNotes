@@ -19,7 +19,7 @@ android {
         versionName "1.0"
         multiDexEnabled true
 
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "com.eliseylobanov.cloudnotes.TestAppJUnitRunner"
     }
 
     buildTypes {
