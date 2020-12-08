@@ -19,7 +19,7 @@ android {
         versionName "1.0"
         multiDexEnabled true
 
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "com.eliseylobanov.cloudnotes.TestAppJUnitRunner"
     }
 
     buildTypes {
@@ -77,5 +77,15 @@ dependencies {
 
     implementation "androidx.fragment:fragment:$fragment_version"
     implementation "androidx.fragment:fragment-ktx:$fragment_version"
+
+    testImplementation "io.mockk:mockk:1.10.0"
+    testImplementation 'android.arch.core:core-testing:1.1.1'
+    testImplementation 'junit:junit:4.+'
+
+    androidTestImplementation "io.mockk:mockk-android:1.10.0"
+    androidTestImplementation 'androidx.test.ext:junit:1.1.2'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+    debugImplementation "androidx.fragment:fragment-testing:$fragment_version"
+    androidTestImplementation "androidx.navigation:navigation-testing:2.3.1"
 
 }
