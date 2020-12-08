@@ -55,7 +55,7 @@ class SplashViewModelTest {
         every { notesRepositoryMock.getCurrentUser() } returns User("name", "email")
         viewModel = SplashViewModel(notesRepositoryMock)
         viewModel.observeViewState().observeForever {
-            result = it as? SplashViewState.Auth
+            result = it
         }
         assertEquals(result, SplashViewState.Auth)
     }
