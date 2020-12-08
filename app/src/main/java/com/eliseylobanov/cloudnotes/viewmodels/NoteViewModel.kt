@@ -7,7 +7,7 @@ import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.*
 
-class NoteViewModel(private val notesRemoteRepository: NotesRepository, private var note: Note?) : ViewModel() {
+class NoteViewModel(private val notesRemoteRepository: NotesRepository, var note: Note?) : ViewModel() {
 
 
     private val showErrorLiveData = MutableLiveData<Boolean>()
@@ -39,7 +39,7 @@ class NoteViewModel(private val notesRemoteRepository: NotesRepository, private 
             }
         }
 
-    private fun updateFields(note: Note) {
+    fun updateFields(note: Note) {
         note.noteId = noteId
         note.noteDate = getDate()
         note.titleText = titleText.value.toString()

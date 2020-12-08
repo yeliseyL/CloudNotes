@@ -46,7 +46,6 @@ class NotesMainViewModelTest {
     fun `should return Notes`() {
         var result: List<Note>? = null
         val testData = listOf(Note(noteId = 1), Note(noteId = 2))
-        viewModel.clear()
         viewModel.observeViewState().observeForever {
             result = when (it) {
                 is ViewState.Value -> it.notes
