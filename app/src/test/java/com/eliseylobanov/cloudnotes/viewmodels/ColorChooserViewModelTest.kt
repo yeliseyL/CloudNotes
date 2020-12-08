@@ -23,17 +23,14 @@ class ColorChooserViewModelTest {
 
     private val colorsRepositoryMock = mockk<ColorsRepository>()
     private lateinit var viewModel: ColorChooserViewModel
-    private var result = listOf<Color>()
+
 
     @Rule
     @JvmField
     var rule: TestRule = InstantTaskExecutorRule()
 
     @Before
-    fun setUp() {
-        every { colorsRepositoryMock.getColors() } returns result
-        viewModel = ColorChooserViewModel(colorsRepositoryMock)
-    }
+    fun setUp() {}
 
     @After
     fun tearDown() {
@@ -42,12 +39,13 @@ class ColorChooserViewModelTest {
 
     @Test
     fun `should return Colors`() {
-        var result: List<Color>?
+        var result: List<Color>? = null
         val testData = listOf(Color.BLUE, Color.GREEN)
+        every { colorsRepositoryMock.getColors() } returns testData
+        viewModel = ColorChooserViewModel(colorsRepositoryMock)
         viewModel.colorList.observeForever {
             result = it
         }
-        result = testData
         assertEquals(testData, result)
     }
 }
