@@ -11,6 +11,12 @@ import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.QueryDocumentSnapshot
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.filterNotNull
+import kotlinx.coroutines.suspendCancellableCoroutine
+import kotlin.coroutines.resumeWithException
+import kotlin.coroutines.suspendCoroutine
 
 private const val NOTES_COLLECTION = "notes"
 private const val USERS_COLLECTION = "users"
@@ -20,42 +26,57 @@ class FireStoreProvider : RemoteDataProvider {
 
     private val db = FirebaseFirestore.getInstance()
     private val notesReference = db.collection(NOTES_COLLECTION)
-    private val result = MutableLiveData<List<Note>>()
+    private val result = MutableStateFlow<List<Note>?>(null)
     private val currentUser: FirebaseUser?
         get() = FirebaseAuth.getInstance().currentUser
 
     private var subscribedOnDb = false
 
-    override fun observeNotes(): LiveData<List<Note>> {
+    override fun observeNotes(): Flow<List<Note>> {
         if (!subscribedOnDb) subscribeForDbChanging()
-        return result
+        return result.filterNotNull()
     }
 
-    override fun getCurrentUser() = currentUser?.run { User(displayName, email) }
+    override fun getCurrentUser(): User? {
+        return currentUser?.run { User(displayName, email) }
+    }
 
-    override fun addOrReplaceNote(newNote: Note) {
-        val result = MutableLiveData<Result<Note>>()
-
-        handleNotesReference(
-            {
-                getUserNotesCollection()
-                    .document(newNote.noteId.toString())
-                    .set(newNote)
-            }, {
-                Log.e(TAG, "Error getting reference note $newNote, message: ${it.message}")
-                result.value = Result.failure(it)
-            }
-        )
+    override suspend fun addOrReplaceNote(newNote: Note) {
+        suspendCoroutine<Unit> { continuation ->
+            handleNotesReference(
+                {
+                    getUserNotesCollection()
+                        .document(newNote.noteId.toString())
+                        .set(newNote)
+                        .addOnSuccessListener {
+                            continuation.resumeWith(Result.success(Unit))
+                        }
+                        .addOnFailureListener {
+                            continuation.resumeWithException(it)
+                        }
+                }, {
+                    continuation.resumeWithException(it)
+                }
+            )
+        }
     }
 
     private fun getUserNotesCollection() = currentUser?.let {
         db.collection(USERS_COLLECTION).document(it.uid).collection(NOTES_COLLECTION)
     } ?: throw NoAuthException()
 
-    override fun deleteNote(id: Long) {
-        getUserNotesCollection()
-            .document(id.toString())
-            .delete()
+    override suspend fun deleteNote(id: Long) {
+        suspendCancellableCoroutine<Unit> { continuation ->
+            getUserNotesCollection()
+                .document(id.toString())
+                .delete()
+                .addOnSuccessListener {
+                    continuation.resumeWith(Result.success(Unit))
+                }
+                .addOnFailureListener {
+                    continuation.resumeWithException(it)
+                }
+        }
     }
 
     private fun subscribeForDbChanging() {

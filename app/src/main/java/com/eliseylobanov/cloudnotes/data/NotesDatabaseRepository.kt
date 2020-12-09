@@ -7,48 +7,45 @@ import androidx.lifecycle.MutableLiveData
 import com.eliseylobanov.cloudnotes.data.database.NoteDatabase
 import com.eliseylobanov.cloudnotes.data.database.NoteEntity
 import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.launch
 
 class NotesDatabaseRepository(application: Application) : NotesRepository {
     private val dataSource = NoteDatabase.getInstance(application).noteDao
 
-    override fun observeNotes(): LiveData<List<Note>> {
-        val temp =  MutableLiveData<List<Note>>()
+    override fun observeNotes(): Flow<List<Note>> {
+        val temp = MutableStateFlow<List<Note>?>(null)
         GlobalScope.launch {
             dataSource.getAllNotes().collect {
                 if (it.isNotEmpty()) {
-                    temp.postValue(noteListConvert(it))
+                    temp.value = noteListConvert(it)
                 }
             }
         }
-        return temp
+        return temp.filterNotNull()
     }
 
-    override fun getCurrentUser(): User? {
+    override suspend fun getCurrentUser(): User? {
         return null
     }
 
-    override fun delete(id: Long) {
-        GlobalScope.launch {
-            dataSource.delete(id)
-        }
+    override suspend fun delete(id: Long) {
+        dataSource.delete(id)
     }
 
-    override fun addOrReplaceNote(newNote: Note) {
-        GlobalScope.launch {
-            dataSource.insert(newNote.toNoteEntity)
-        }
+    override suspend fun addOrReplaceNote(newNote: Note) {
+        dataSource.insert(newNote.toNoteEntity)
     }
 
     suspend fun getNoteById(id: Long): Note? {
         return dataSource.get(id)?.toNote
     }
 
-    override fun clear() {
-        GlobalScope.launch {
-            dataSource.clear()
-        }
+    override suspend fun clear() {
+        dataSource.clear()
     }
 }
 
@@ -68,7 +65,9 @@ internal val NoteEntity.toNote: Note
 internal val Note.toNoteEntity: NoteEntity
     get() {
         val noteEntity = NoteEntity()
-        if (this.noteId != 0L) {noteEntity.noteId = this.noteId}
+        if (this.noteId != 0L) {
+            noteEntity.noteId = this.noteId
+        }
         noteEntity.noteDate = this.noteDate
         noteEntity.titleText = this.titleText
         noteEntity.noteText = this.noteText
