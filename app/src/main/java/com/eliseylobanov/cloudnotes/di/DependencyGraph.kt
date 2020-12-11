@@ -3,10 +3,10 @@ package com.eliseylobanov.cloudnotes.di
 import com.eliseylobanov.cloudnotes.data.NotesDatabaseRepository
 import com.eliseylobanov.cloudnotes.data.ColorsRepository
 import com.eliseylobanov.cloudnotes.data.Note
-import com.eliseylobanov.cloudnotes.data.NotesRemoteRepository
+//import com.eliseylobanov.cloudnotes.data.NotesRemoteRepository
 import com.eliseylobanov.cloudnotes.data.NotesRepository
-import com.eliseylobanov.cloudnotes.data.provider.FireStoreProvider
-import com.eliseylobanov.cloudnotes.data.provider.RemoteDataProvider
+//import com.eliseylobanov.cloudnotes.data.provider.FireStoreProvider
+//import com.eliseylobanov.cloudnotes.data.provider.RemoteDataProvider
 import com.eliseylobanov.cloudnotes.viewmodels.ColorChooserViewModel
 import com.eliseylobanov.cloudnotes.viewmodels.NoteViewModel
 import com.eliseylobanov.cloudnotes.viewmodels.NotesMainViewModel
@@ -23,9 +23,9 @@ object DependencyGraph {
 
     private val repositoryModule by lazy {
         module {
-            single { NotesRemoteRepository(get()) } bind NotesRepository::class
-            single { FireStoreProvider() } bind RemoteDataProvider::class
-//            single { NotesDatabaseRepository(get()) } bind NotesRepository::class
+//            single { NotesRemoteRepository(get()) } bind NotesRepository::class
+//            single { FireStoreProvider() } bind RemoteDataProvider::class
+            single { NotesDatabaseRepository(get()) } bind NotesRepository::class
             single { ColorsRepository() } bind ColorsRepository::class
         }
     }
