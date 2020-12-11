@@ -48,15 +48,27 @@ class NoteViewModel(private val notesRemoteRepository: NotesRepository, private 
     }
 
     fun createNote() {
-        val newNote = Note()
-        updateFields(newNote)
-        newNote.let { note ->
-            notesRemoteRepository.addOrReplaceNote(note)
+        viewModelScope.launch {
+            val newNote = Note()
+            try {
+                newNote.let {
+                    updateFields(it)
+                    notesRemoteRepository.addOrReplaceNote(it)
+                }
+            } catch (th: Throwable) {
+                showErrorLiveData.value = true
+            }
         }
     }
 
     fun deleteNote() {
-        note?.let { notesRemoteRepository.delete(it.noteId) }
+        viewModelScope.launch {
+            try {
+                note?.let { notesRemoteRepository.delete(it.noteId) }
+            } catch (th: Throwable) {
+                showErrorLiveData.value = true
+            }
+        }
     }
 
     fun showError(): LiveData<Boolean> = showErrorLiveData

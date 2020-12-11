@@ -7,16 +7,27 @@ import com.eliseylobanov.cloudnotes.data.NotesDatabaseRepository
 import com.eliseylobanov.cloudnotes.data.NotesRepository
 import com.eliseylobanov.cloudnotes.data.database.NoteDao
 import com.eliseylobanov.cloudnotes.data.database.NoteEntity
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 
 class NotesMainViewModel(private val notesRepository: NotesRepository): ViewModel() {
 
-    fun observeViewState(): LiveData<ViewState> = notesRepository.observeNotes()
-        .map {
-            if (it.isEmpty()) ViewState.EMPTY else ViewState.Value(it)
-        }
+    private val notesLiveData = MutableLiveData<ViewState>()
+
+    init {
+        notesRepository.observeNotes()
+            .onEach {
+                notesLiveData.value = if (it.isEmpty()) ViewState.EMPTY else ViewState.Value(it)
+            }
+            .launchIn(viewModelScope)
+    }
+
+    fun observeViewState(): LiveData<ViewState> = notesLiveData
 
     fun clear() {
-        notesRepository.clear()
+        viewModelScope.launch {
+            notesRepository.clear()
+        }
     }
 }
