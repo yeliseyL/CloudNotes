@@ -7,27 +7,15 @@ import androidx.lifecycle.MutableLiveData
 import com.eliseylobanov.cloudnotes.data.database.NoteDatabase
 import com.eliseylobanov.cloudnotes.data.database.NoteEntity
 import kotlinx.coroutines.*
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.filterNotNull
+import kotlinx.coroutines.flow.*
 
 class NotesDatabaseRepository(application: Application) : NotesRepository {
     private val dataSource = NoteDatabase.getInstance(application).noteDao
 
-    override fun observeNotes(): Flow<List<Note>> {
-        val temp = MutableStateFlow<List<Note>?>(null)
-        with(CoroutineScope (Job() + Dispatchers.IO)) {
-            launch {
-                dataSource.getAllNotes().collect {
-                    if (it.isNotEmpty()) {
-                        temp.value = noteListConvert(it)
-                    }
-                }
-            }
-
+    override fun observeNotes() = dataSource.getAllNotes().map { list ->
+        list.map {
+            it.toNote
         }
-        return temp.filterNotNull()
     }
 
     override suspend fun getCurrentUser(): User? {
